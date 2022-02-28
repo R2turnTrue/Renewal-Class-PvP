@@ -1,0 +1,7 @@
+name: ClassPvP
+main: io.github.classpvp.official.ClassPvP
+version: 1.18.1
+api-version: 1.18
+commands:
+  class:
+    permission: op

@@ -6,7 +6,7 @@ import io.github.classpvp.official.classes.PlayerClass
 import io.github.classpvp.official.classes.pvpClass
 import io.github.classpvp.official.utils.ClassSelector
 import io.github.classpvp.official.utils.ableClassListMap
-import io.github.classpvp.official.utils.playerClassMap
+import io.github.classpvp.official.utils.battleField
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -32,10 +32,8 @@ class ClassSelectListener : Listener {
     @EventHandler
     fun onClassSelectListener(event: InventoryClickEvent) {
         if (event.view.title() == Component.text("Class Selector")) {
-            if (event.clickedInventory == event.whoClicked.inventory) {
-                event.isCancelled = true
-                return
-            }
+            event.isCancelled = true
+            if (event.clickedInventory == event.whoClicked.inventory) return
 
             val player = event.whoClicked as Player
             val page = classSelectorPage[player]!!
@@ -46,7 +44,8 @@ class ClassSelectListener : Listener {
                 }
 
                 31 -> {
-                    player.pvpClass = PlayerClass.values().random()
+                    player.pvpClass = ableClassListMap[player]!!.random()
+                    player.battleField()
                 }
 
                 35 -> {
@@ -56,12 +55,14 @@ class ClassSelectListener : Listener {
 
                 else -> {
                     if (event.slot in 9 until 27) {
-                        val clickedClassNumber = (page - 1) * 18 + event.slot
+                        val clickedClassNumber = (page - 1) * 18 + (event.slot - 9)
                         val pvpClass = PlayerClass.pvpClass(clickedClassNumber)
                         if (!ableClassListMap[player]!!.contains(pvpClass)) {
                             Component.text("${RED}당신은 이 클래스를 해금하지 못했습니다!") sendTo player
+                            return
                         }
                         player.pvpClass = pvpClass
+                        player.battleField()
                     }
                 }
             }

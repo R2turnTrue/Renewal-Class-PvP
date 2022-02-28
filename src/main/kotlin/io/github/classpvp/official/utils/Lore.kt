@@ -1,5 +1,6 @@
 package io.github.classpvp.official.utils
 
+import io.github.asr.mafp.utils.WHITE
 import net.kyori.adventure.text.Component
 
 class Lore(
@@ -9,9 +10,9 @@ class Lore(
 ) {
     fun asComponent(): List<Component> {
         val description = classDescription.toMutableList()
-        description.add(Component.text("능력 : ${skillDescription[0]}"))
+        description.add(Component.text("${WHITE}능력 : ${skillDescription[0]}"))
         for (index in 1 until skillDescription.size) description.add(Component.text(skillDescription[index]))
-        description.add(Component.text("버프 : $potionEffectDescription"))
+        description.add(Component.text("${WHITE}버프 : $potionEffectDescription"))
 
         return description
     }

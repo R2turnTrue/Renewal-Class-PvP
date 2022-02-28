@@ -27,7 +27,7 @@ class ClassSelector {
 
             for (index in 0 until min(PlayerClass.maxIndex(), 18)) {
                 val playerClass = PlayerClass.values()[index]
-
+                playerClass.pvpClass.onRegister()
                 val icon = playerClass.pvpClass.icon
                 icon.editMeta {
                     it.displayName(playerClass.pvpClass.name)

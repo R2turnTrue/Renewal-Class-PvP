@@ -1,7 +1,11 @@
 package io.github.classpvp.official.classes
 
+import io.github.asr.mafp.server.registerListeners
 import io.github.classpvp.official.classes.archer.ArcherClass
+import io.github.classpvp.official.classes.hot.HotClass
+import io.github.classpvp.official.classes.speeder.SpeederClass
 import io.github.classpvp.official.classes.warrior.WarriorClass
+import io.github.classpvp.official.plugin
 import io.github.classpvp.official.utils.playerClassMap
 import org.bukkit.entity.Player
 import java.lang.RuntimeException
@@ -15,22 +19,29 @@ var Player.pvpClass: PlayerClass?
 fun Player.equip() {
     if (pvpClass != null) {
         val pvpClass = pvpClass!!.pvpClass
+        pvpClass.onRegister()
         inventory.helmet = pvpClass.helmet
-        inventory.chestplate = pvpClass.helmet
-        inventory.leggings = pvpClass.helmet
+        inventory.chestplate = pvpClass.chestplate
+        inventory.leggings = pvpClass.leggings
         inventory.boots = pvpClass.boots
 
         pvpClass.weapons.orEmpty().forEach {
             inventory.addItem(it)
         }
 
-        addPotionEffects(pvpClass.potionEffects.orEmpty())
+        addPotionEffects(pvpClass.potionEffects)
+
+        pvpClass.skillListeners.forEach {
+            plugin.registerListeners(it)
+        }
     }
 }
 
 enum class PlayerClass(val number: Int, val pvpClass: PvPClass) {
     WARRIOR(0, WarriorClass()),
-    ARCHER(1, ArcherClass());
+    ARCHER(1, ArcherClass()),
+    SPEEDER(2, SpeederClass()),
+    HOT(3, HotClass());
 
     companion object {
         @JvmStatic

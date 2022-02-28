@@ -2,6 +2,7 @@ package io.github.classpvp.official.listeners.pvp
 
 import io.github.asr.mafp.utils.RED
 import io.github.classpvp.official.plugin
+import io.github.classpvp.official.utils.lobby
 import io.github.classpvp.official.utils.reloadPlayerList
 import io.github.classpvp.official.utils.serialKillMap
 import net.kyori.adventure.text.Component
@@ -16,6 +17,8 @@ class PlayerDeathListener : Listener {
     fun onPlayerDeath(event: PlayerDeathEvent) {
         event.isCancelled = true
         event.player.health = 20.0
+        event.player.fireTicks = 0
+        event.player.foodLevel = 20
         event.player.showTitle(
             Title.title(
                 Component.text("${RED}당신은 죽었습니다!"),
@@ -40,5 +43,7 @@ class PlayerDeathListener : Listener {
         serialKillMap[player] = 0
 
         player.reloadPlayerList()
+        player.inventory.clear()
+        player.lobby()
     }
 }

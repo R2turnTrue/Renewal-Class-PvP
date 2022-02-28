@@ -23,9 +23,11 @@ class CommandTabComplete : TabCompleter {
                                 result.add(string)
                             }
                         }
+
+                        return result
                     }
 
-                    2 -> {
+                    3 -> {
                         val list = PlayerClass.values().toList()
                         val result = mutableListOf<String>()
                         for (pvpClass in list) {
@@ -33,6 +35,8 @@ class CommandTabComplete : TabCompleter {
                                 result.add(pvpClass.name)
                             }
                         }
+
+                        return result
                     }
                 }
             }

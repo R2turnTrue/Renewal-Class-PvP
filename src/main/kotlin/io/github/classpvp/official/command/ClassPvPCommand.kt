@@ -21,12 +21,24 @@ class ClassPvPCommand : CommandExecutor {
                 when (args[0]) {
                     "grant" -> {
                         val player = sender.server.getPlayer(args[1])!!
+                        if (args[2] == "ALL") {
+                            PlayerClass.values().forEach {
+                                player.grantClass(it)
+                            }
+                            return false
+                        }
                         val pvpClass = PlayerClass.valueOf(args[2])
                         player.grantClass(pvpClass)
                     }
 
                     "revoke" -> {
                         val player = sender.server.getPlayer(args[1])!!
+                        if (args[2] == "ALL") {
+                            PlayerClass.values().forEach {
+                                player.revokeClass(it)
+                            }
+                            return false
+                        }
                         val pvpClass = PlayerClass.valueOf(args[2])
                         player.revokeClass(pvpClass)
                     }

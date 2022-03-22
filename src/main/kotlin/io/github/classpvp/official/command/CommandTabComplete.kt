@@ -31,10 +31,12 @@ class CommandTabComplete : TabCompleter {
                         val list = PlayerClass.values().toList()
                         val result = mutableListOf<String>()
                         for (pvpClass in list) {
-                            if (pvpClass.name.lowercase().startsWith(args[0].lowercase())) {
+                            if (pvpClass.name.lowercase().startsWith(args[2].lowercase())) {
                                 result.add(pvpClass.name)
                             }
                         }
+
+                        result.add("ALL")
 
                         return result
                     }

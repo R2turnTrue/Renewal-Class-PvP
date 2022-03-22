@@ -20,7 +20,7 @@ class ClassPvP : JavaPlugin() {
         registerListeners(ClassSelectListener())
 
         registerListeners(PlayerDeathListener(), BucketClassListener())
-        registerListeners(BlockBreakListener(), DroppedItemListener())
+        registerListeners(BlockBreakListener(), DroppedItemListener(), BlockFormListener())
 
         server.getPluginCommand("class")!!.apply {
             setExecutor(ClassPvPCommand())
